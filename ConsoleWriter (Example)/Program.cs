@@ -62,6 +62,9 @@ namespace ConsoleWriter__Example_
 
                 cw.WriteLineAnimated("");
 
+                cw.WriteLineAnimated(new string[3] { "Array Test: ", "This is a Green string and ", "this is a Yellow string." }, 100, new ConsoleColor?[3] {ConsoleColor.White, ConsoleColor.DarkGreen, ConsoleColor.Yellow });
+                cw.WriteLineAnimated("");
+
                 cw.WriteAnimated("Press ", 10, ConsoleColor.Green, ConsoleColor.Blue)
                     .WriteAnimated("Any Key", 10, ConsoleColor.White, ConsoleColor.Blue)
                     .WriteLineAnimated(" to exit.", 10, ConsoleColor.Green, ConsoleColor.Blue);
