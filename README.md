@@ -3,20 +3,21 @@ Simple Command Line Animator
 
 Note: So far I’ve only created a few single-line animations. Have not yet ventured to create elaborate multi-line animations.
 
-<b>Paremeters</b><br>
-Animation Types:
-- Linear = Display each character at a time from left to right.
-- GarbledRandom = Garbled characters that randomly change to text.
-- GarbledLinear = Garbled characters that change to text from left to right.
-- SlideIn = Characters slide into place from the right side of the screen.
+<b>Settings</b>
 
-Other Settings:
+Variables:
 - AniTextColorExplicit = Set color of current character being animated.
 - TextColorExplicit = Set color of text before/after animation.
 - BackgroundColor = Set background color of line.
 - GarbledCharacterString = String of characters used in the Garbled animations.
 
-<b>Functions</b><br>
+Animation Types:
+- Linear = Display each character at a time from left to right.
+- GarbledRandom = Garbled characters that randomly change to text.
+- GarbledLinear = Garbled characters that change to text from left to right.
+- SlideIn = Characters slide into place from the right side of the screen.
+<br>
+<b>Functions</b>
 
         WriteAnimated(string text, int speed = 100, ConsoleColor? textColor = null, ConsoleColor? animationColor = null, AnimationType aniType = AnimationType.Linear)
         WriteLineAnimated(string text, int speed = 100, ConsoleColor? textColor = null, ConsoleColor? animationColor = null, AnimationType aniType = AnimationType.Linear)
