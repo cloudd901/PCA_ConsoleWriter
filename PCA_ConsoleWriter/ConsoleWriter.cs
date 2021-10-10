@@ -2,18 +2,20 @@
 //Created by Derrick Ducote - admin@pcaffinity.com -
 //==========================================================
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
+
 namespace PCAFFINITY
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Text;
-
     public enum AnimationType
     {
         Linear,
         GarbledRandom,
+        GarbledRandomWhiteSpace,
         GarbledLinear,
+        GarbledLinearWhiteSpace,
         SlideIn
     }
 
@@ -134,7 +136,7 @@ namespace PCAFFINITY
                 {
                     Linear();
                 }
-                else if (AniType == AnimationType.GarbledLinear || AniType == AnimationType.GarbledRandom)
+                else if (AniType == AnimationType.GarbledLinear || AniType == AnimationType.GarbledRandom || AniType == AnimationType.GarbledLinearWhiteSpace || AniType == AnimationType.GarbledRandomWhiteSpace)
                 {
                     Garbled();
                 }
@@ -169,7 +171,14 @@ namespace PCAFFINITY
                 char[] scrambledCopy = new char[S1[i].Length];
                 for (int j = 0; j < S1[i].Length; j++)
                 {
-                    scrambledCopy[j] = (!char.IsWhiteSpace(S1[i][j]) ? GarbledCharacterString[random.Next(GarbledCharacterString.Length)] : ' ');
+                    if (AniType == AnimationType.GarbledRandomWhiteSpace || AniType == AnimationType.GarbledLinearWhiteSpace)
+                    {
+                        scrambledCopy[j] = GarbledCharacterString[random.Next(GarbledCharacterString.Length)];
+                    }
+                    else
+                    {
+                        scrambledCopy[j] = (!char.IsWhiteSpace(S1[i][j]) ? GarbledCharacterString[random.Next(GarbledCharacterString.Length)] : ' ');
+                    }
                 }
 
                 List<int> scrambledKeys = new List<int>();
@@ -188,7 +197,7 @@ namespace PCAFFINITY
                     pos += S1[j].Length;
                 }
 
-                if (AniType == AnimationType.GarbledRandom)
+                if (AniType == AnimationType.GarbledRandom || AniType == AnimationType.GarbledRandomWhiteSpace)
                 {
                     // Animate current string [i]
                     for (int j = 0; j < S1[i].Length; j++)
@@ -201,6 +210,25 @@ namespace PCAFFINITY
                         scrambledCopy[key] = S1[i][key];
                         string copy = new string(scrambledCopy);
 
+                        if (j < S1[i].Length - 1)
+                        {
+                            sw.Restart();
+                            if (AniType == AnimationType.GarbledRandomWhiteSpace)
+                            {
+                                while (sw.ElapsedMilliseconds < Speed)
+                                {
+                                    // Do nothing - no sleep
+                                }
+                            }
+                            else
+                            {
+                                while (sw.ElapsedMilliseconds < (Speed > 0 && !char.IsWhiteSpace(scrambledCopy[key]) ? Speed : 0))
+                                {
+                                    // Do nothing - no sleep
+                                }
+                            }
+                        }
+
                         Console.ForegroundColor = CC1[i];
                         Console.Write(copy.Remove(key));
 
@@ -209,15 +237,9 @@ namespace PCAFFINITY
 
                         Console.ForegroundColor = CC1[i];
                         Console.Write(copy.Substring(key + 1));
-
-                        sw.Restart();
-                        while (sw.ElapsedMilliseconds < (Speed > 0 && !char.IsWhiteSpace(S1[i][j]) ? Speed : 0))
-                        {
-                            // Do nothing - no sleep
-                        }
                     }
                 }
-                else if (AniType == AnimationType.GarbledLinear)
+                else if (AniType == AnimationType.GarbledLinear || AniType == AnimationType.GarbledLinearWhiteSpace)
                 {
                     // Animate current string [i]
                     for (int j = 0; j < S1[i].Length; j++)
@@ -225,6 +247,25 @@ namespace PCAFFINITY
                         Console.SetCursorPosition(pos, Console.CursorTop);
                         scrambledCopy[j] = S1[i][j];
                         string copy = new string(scrambledCopy);
+
+                        if (j < S1[i].Length - 1)
+                        {
+                            sw.Restart();
+                            if (AniType == AnimationType.GarbledLinearWhiteSpace)
+                            {
+                                while (sw.ElapsedMilliseconds < Speed)
+                                {
+                                    // Do nothing - no sleep
+                                }
+                            }
+                            else
+                            {
+                                while (sw.ElapsedMilliseconds < (Speed > 0 && !char.IsWhiteSpace(scrambledCopy[j]) ? Speed : 0))
+                                {
+                                    // Do nothing - no sleep
+                                }
+                            }
+                        }
 
                         Console.ForegroundColor = CC1[i];
                         Console.Write(copy.Remove(j));
@@ -234,12 +275,6 @@ namespace PCAFFINITY
 
                         Console.ForegroundColor = CC1[i];
                         Console.Write(copy.Substring(j + 1));
-
-                        sw.Restart();
-                        while (sw.ElapsedMilliseconds < (Speed > 0 && !char.IsWhiteSpace(S1[i][j]) ? Speed : 0))
-                        {
-                            // Do nothing - no sleep
-                        }
                     }
                 }
             }
@@ -270,14 +305,18 @@ namespace PCAFFINITY
                     Console.ForegroundColor = CC1[i];
                     Console.Write(temp);
                     Console.ForegroundColor = CC2[multiAnimationColor ? i : 0];
+
+                    if (j < S1[i].Length - 1)
+                    {
+                        sw.Restart();
+                        while (sw.ElapsedMilliseconds < (Speed > 0 && !char.IsWhiteSpace(S1[i][j]) ? Speed : 0))
+                        {
+                            // Do nothing - no sleep
+                        }
+                    }
+
                     Console.Write(char.ToUpperInvariant(S1[i][j]));
                     temp.Append(S1[i][j]);
-
-                    sw.Restart();
-                    while (sw.ElapsedMilliseconds < (Speed > 0 && !char.IsWhiteSpace(S1[i][j]) ? Speed : 0))
-                    {
-                        // Do nothing - no sleep
-                    }
                 }
 
                 temp.Clear();
