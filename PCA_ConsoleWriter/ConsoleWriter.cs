@@ -62,12 +62,12 @@ namespace PCAFFINITY
             return this;
         }
 
-        public ConsoleWriter WriteLineAnimated(string[] text, int speed = 100, ConsoleColor?[] textColor = null, ConsoleColor? animationColor = null, AnimationType aniType = AnimationType.Linear)
-        {
-            Writer(text, speed, textColor, animationColor != null ? new ConsoleColor?[1] { animationColor } : null, aniType);
-            Console.WriteLine();
-            return this;
-        }
+        //public ConsoleWriter WriteLineAnimated(string[] text, int speed = 100, ConsoleColor? textColor = null, ConsoleColor? animationColor = null, AnimationType aniType = AnimationType.Linear)
+        //{
+        //    Writer(text, speed, textColor != null ? new ConsoleColor?[1] { textColor } : null, animationColor != null ? new ConsoleColor?[1] { animationColor } : null, aniType);
+        //    Console.WriteLine();
+        //    return this;
+        //}
 
         protected virtual void Dispose(bool disposing)
         {
@@ -149,7 +149,7 @@ namespace PCAFFINITY
             Console.SetCursorPosition(StartPosition, Console.CursorTop);
             for (int i = 0; i < s1.Length; i++)
             {
-                Console.ForegroundColor = CC1[i];
+                Console.ForegroundColor = CC1.Length > i ? CC1[i] : CC1[CC1.Length - 1];
                 Console.Write(s1[i]);
             }
 
@@ -192,7 +192,7 @@ namespace PCAFFINITY
                 for (int j = 0; j < i; j++)
                 {
                     Console.SetCursorPosition(StartPosition, Console.CursorTop);
-                    Console.ForegroundColor = CC1[j];
+                    Console.ForegroundColor = CC1.Length > j ? CC1[j] : CC1[CC1.Length - 1];
                     Console.Write(S1[j]);
                     pos += S1[j].Length;
                 }
@@ -229,13 +229,14 @@ namespace PCAFFINITY
                             }
                         }
 
-                        Console.ForegroundColor = CC1[i];
+                        ConsoleColor cc1 = CC1.Length > i ? CC1[i] : CC1[CC1.Length - 1];
+                        Console.ForegroundColor = cc1;
                         Console.Write(copy.Remove(key));
 
                         Console.ForegroundColor = CC2[multiAnimationColor ? i : 0];
                         Console.Write(scrambledCopy[key]);
 
-                        Console.ForegroundColor = CC1[i];
+                        Console.ForegroundColor = cc1;
                         Console.Write(copy.Substring(key + 1));
                     }
                 }
@@ -267,13 +268,14 @@ namespace PCAFFINITY
                             }
                         }
 
-                        Console.ForegroundColor = CC1[i];
+                        ConsoleColor cc1 = CC1.Length > i ? CC1[i] : CC1[CC1.Length - 1];
+                        Console.ForegroundColor = cc1;
                         Console.Write(copy.Remove(j));
 
                         Console.ForegroundColor = CC2[multiAnimationColor ? i : 0];
                         Console.Write(scrambledCopy[j]);
 
-                        Console.ForegroundColor = CC1[i];
+                        Console.ForegroundColor = cc1;
                         Console.Write(copy.Substring(j + 1));
                     }
                 }
@@ -297,12 +299,12 @@ namespace PCAFFINITY
                     Console.SetCursorPosition(pos, Console.CursorTop);
                     for (int k = 0; k < i; k++)
                     {
-                        Console.ForegroundColor = CC1[k];
+                        Console.ForegroundColor = CC1.Length > k ? CC1[k] : CC1[CC1.Length - 1];
                         Console.Write(S1[k]);
                     }
 
                     // Animate current string [i]
-                    Console.ForegroundColor = CC1[i];
+                    Console.ForegroundColor = CC1.Length > i ? CC1[i] : CC1[CC1.Length - 1];
                     Console.Write(temp);
                     Console.ForegroundColor = CC2[multiAnimationColor ? i : 0];
 
@@ -340,12 +342,12 @@ namespace PCAFFINITY
                     Console.SetCursorPosition(pos, Console.CursorTop);
                     for (int k = 0; k < i; k++)
                     {
-                        Console.ForegroundColor = CC1[k];
+                        Console.ForegroundColor = CC1.Length > k ? CC1[k] : CC1[CC1.Length - 1];
                         Console.Write(S1[k]);
                     }
 
                     // Animate current string [i]
-                    Console.ForegroundColor = CC1[i];
+                    Console.ForegroundColor = CC1.Length > i ? CC1[i] : CC1[CC1.Length - 1];
                     Console.Write(temp);
                     Console.ForegroundColor = CC2[multiAnimationColor ? i : 0];
                     if (!char.IsWhiteSpace(S1[i][j]))
